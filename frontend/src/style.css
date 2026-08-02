@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import "tailwindcss";
+
+@layer base {
+	/* watchlist ribbon*/
+	.ribbon {
+		--r: 0.8em; /* control the cutout */
+
+		border-block: 0.5em solid #0000;
+		padding-inline: calc(var(--r) + 0.25em) 0.5em;
+		line-height: 1.8;
+		clip-path: polygon(
+			0 0,
+			100% 0,
+			100% 100%,
+			0 100%,
+			0 calc(100% - 0.25em),
+			var(--r) 50%,
+			0 0.25em
+		);
+		background:
+			radial-gradient(0.2em 50% at right, #000a, #0000) border-box,
+			#f97316 padding-box; /* the color  */
+		width: fit-content;
+	}
+
+	.Toastify__toast-theme--colored.Toastify__toast--error {
+		background-color: oklch(57.7% 0.245 27.325) !important;
+	}
+
+	/* carousel styles */
+	.carousel__track {
+		display: flex;
+		align-items: start;
+	}
+	.carousel__icon {
+		fill: white !important;
+	}
+	.carousel__next,
+	.carousel__prev {
+		background-color: #f97316 !important;
+		border-radius: 100% !important;
+	}
+	.carousel__viewport {
+		padding: 0px 40px;
+	}
+	.remove-scrolling {
+		height: 100%;
+		overflow: hidden;
+	}
+
+	@media (min-width: 1536px) {
+		.carousel__viewport {
+			padding: 60px !important;
+		}
+	}
+
+	@media (min-width: 2000px) {
+		.carousel__next,
+		.carousel__prev {
+			width: 80px !important;
+			height: 80px !important;
+		}
+	}
+
+	/* tooltip tip vue slider */
+	.vue-slider-dot-tooltip-inner-top:after {
+		border-top-color: #1e3a8a !important;
+	}
+
+	@layer utilities {
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.no-scrollbar::-webkit-scrollbar {
+			display: none;
+		}
+		/* Hide scrollbar for IE, Edge and Firefox */
+		.no-scrollbar {
+			-ms-overflow-style: none; /* IE and Edge */
+			scrollbar-width: none; /* Firefox */
+		}
+	}
+
+	input[type="checkbox"] {
+		accent-color: #2a4365;
+	}
+
+	button {
+		background-color: #f97316;
+		color: white;
+		border-radius: 10px 10px;
+		padding: 10px 10px;
+		height: auto;
+		width: auto;
+	}
+
+	button:active {
+		background-color: #78350f;
+	}
+
+	h2 {
+		color: white;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		text-align: center;
+		width: auto;
+		margin-bottom: 0.5rem;
+	}
+
+	@media (min-width: 1024px) {
+		h2 {
+			margin-bottom: 1rem;
+			font-size: 1.25rem;
+			line-height: 1.75rem;
+		}
+	}
+
+	@media (min-width: 1536px) {
+		h2 {
+			margin-bottom: 2rem;
+			font-size: 2.25rem;
+			line-height: 2.25rem;
+		}
+		button {
+			font-size: 2rem;
+		}
+	}
+}
+
+@theme {
+	--font-krub: "Krub", sans-serif;
+
+	--animate-flash: flash 2.5s ease-in-out infinite;
+
+	--breakpoint-360: 360px;
+	--breakpoint-370: 370px;
+	--breakpoint-410: 410px;
+	--breakpoint-425: 425px;
+	--breakpoint-md: 768px;
+	--breakpoint-800: 800px;
+	--breakpoint-960: 960px;
+	--breakpoint-lg: 1024px;
+	--breakpoint-xl: 1280px;
+	--breakpoint-1360: 1360px;
+	--breakpoint-1440: 1440px;
+	--breakpoint-1510: 1510px;
+	--breakpoint-1600: 1600px;
+	--breakpoint-1680: 1680px;
+	--breakpoint-1920: 1920px;
+
+	@keyframes flash {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0;
+		}
+	}
+
+	--animate-expand-right: expand-right 0.25s ease-out forwards;
+	--animate-move-up: move-up 0.5s ease-out forwards;
+	--animate-contract-left: contract-left 0.25s ease-in forwards;
+
+	@keyframes expand-right {
+		from {
+			transform: translateX(-100%);
+			display: none;
+			z-index: 0;
+		}
+		to {
+			transform: translateX(0%);
+			display: block;
+			z-index: 100;
+		}
+	}
+	@keyframes move-up {
+		from {
+			transform: translateY(100%);
+			display: none;
+			z-index: 0;
+		}
+		to {
+			transform: translateY(0%);
+			display: block;
+		}
+	}
+	@keyframes contract-left {
+		from {
+			transform: translateX(0%);
+		}
+		to {
+			transform: translateX(-100%);
+			display: none;
+		}
+	}
+}

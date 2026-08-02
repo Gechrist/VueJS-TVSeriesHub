@@ -1,0 +1,33 @@
+{
+	"compilerOptions": {
+		/* Basic Options */
+		"target": "ES2022",
+		"outDir": "./dist",
+		"rootDir": "./",
+		"module": "es2022",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"types": ["node"],
+		"noEmitOnError": true,
+		"ignoreDeprecations": "6.0",
+
+		/* Source Map Options */
+		"sourceMap": true,
+
+		/* Module Resolution Options */
+		"moduleResolution": "node",
+		"baseUrl": "./",
+
+		/* Additional Checks */
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": false
+	},
+	"include": ["./*.ts"],
+	"exclude": ["node_modules"]
+}
