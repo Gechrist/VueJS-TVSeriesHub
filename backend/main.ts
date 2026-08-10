@@ -6792,22 +6792,21 @@ app.use(router.routes());
 if (!module.parent)
 	server.listen(3001, () => console.log("API Server listening on port 3001"));
 
-// Vite-Node’s HMR hooks - remove before production
+// Vite-Node’s HMR hooks - comment out in production
 //@ts-ignore
-if (import.meta.hot) {
-	// Called before a “full reload” (entry file changed)
-	//@ts-ignore
-	import.meta.hot.on("vite:beforeFullReload", () => {
-		console.log("🔄 Closing server before full reload");
-		server.close();
-	});
+// if (import.meta.hot) {
+// 	// Called before a “full reload” (entry file changed)
+// 	//@ts-ignore
+// 	import.meta.hot.on("vite:beforeFullReload", () => {
+// 		console.log("🔄 Closing server before full reload");
+// 		server.close();
+// 	});
 
-	// Called on any HMR dispose to clear side-effects
-	//@ts-ignore
-	import.meta.hot.dispose(() => {
-		console.log("✅ Disposing server instance");
-		server.close();
-	});
-}
+// 	// Called on any HMR dispose to clear side-effects
+// 	//@ts-ignore
+// 	import.meta.hot.dispose(() => {
+// 		console.log("✅ Disposing server instance");
+// 		server.close();
+// 	});
+// }
 
-// cd to backend and run ./node_modules/.bin/prisma command instead of npx prisma!!!
