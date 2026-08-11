@@ -21,7 +21,6 @@
 	import Filters from "/filters.svg";
 	import Close from "/close.svg";
 
-	const apiPort = import.meta.env.VITE_APP_API_PORT || 3001;
 	const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3001";
 	const router = useRouter();
 

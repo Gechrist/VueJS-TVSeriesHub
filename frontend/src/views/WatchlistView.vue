@@ -30,7 +30,6 @@
 		snapAlign: "start",
 	};
 
-	const apiPort = import.meta.env.VITE_APP_API_PORT || 3000;
 	const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3001";
 	const editedFeaturedNetworks = ref<Array<string>>([]);
 	const router = useRouter();

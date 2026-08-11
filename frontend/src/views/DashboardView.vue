@@ -11,9 +11,7 @@
 	const userId = ref<string | null>(null);
 	const userInfoJson = ref<any>(null);
 
-	const apiPort = import.meta.env.VITE_APP_API_PORT || 3001;
-	const apiUrl =
-		import.meta.env.VITE_APP_API_URL || `http://localhost:${apiPort}`;
+	const apiUrl = import.meta.env.VITE_APP_API_URL || `http://localhost:3001`;
 
 	async function callAPIClicked() {
 		try {
