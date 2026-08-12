@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate https//pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("DATABASE_URL")
+}
+
+model Series {
+  id         Int      @id @unique @default(autoincrement())
+  tvMazeId   Int
+  name       String
+  language   String?
+  genres     String[]
+  status     String?
+  runtime    Int?
+  premiered  String?
+  rating     Json?
+  weight     Int?
+  network    Json?
+  webChannel Json?
+  image      Json?
+  summary    String?
+  links      Json?
+}
+
+model User {
+  id               Int      @id @unique @default(autoincrement())
+  email            String   @unique
+  watchlist        Int[]
+  featuredNetworks String[]
+  notifications    Json
+}
+
+model UserNotificationEvent {
+  id        Int      @id @unique @default(autoincrement())
+  userId    String
+  type      String
+  createdAt DateTime @default(now())
+}

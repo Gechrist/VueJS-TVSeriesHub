@@ -1,4 +1,5 @@
 {
+	"type": "module",
 	"scripts": {
 		"dev": "npx vite-node --watch ./main.ts",
 		"lint": "eslint .",
@@ -8,13 +9,12 @@
 	},
 	"dependencies": {
 		"@koa/cors": "^5.0.0",
-		"@prisma/client": "^6.19.3",
+		"@prisma/client": "^7.9.1",
 		"@prisma/extension-accelerate": "^2.0.2",
 		"koa": "^2.15.3",
 		"koa-bodyparser": "^4.4.1",
 		"koa-router": "^12.0.0",
 		"node-cron": "^4.2.1",
-		"prisma": "6.19.3",
 		"supertokens-node": "^24.0.2",
 		"typescript": "^4.7.2"
 	},
@@ -25,6 +25,7 @@
 		"@types/koa-router": "^7.4.4",
 		"eslint": "^10.0.0",
 		"globals": "^15.13.0",
+		"prisma": "^7.9.1",
 		"ts-node": "^10.9.2",
 		"typescript-eslint": "^8.18.1",
 		"vite-node": "^3.2.4"

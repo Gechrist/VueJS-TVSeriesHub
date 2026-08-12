@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AuthView from "../views/AuthView.vue";
 import NetworksView from "../views/NetworksView.vue";
-import DashboardView from "../views/DashboardView.vue";
 import WatchlistView from "../views/WatchlistView.vue";
 
 const router = createRouter({
@@ -22,11 +21,6 @@ const router = createRouter({
 			path: "/networks",
 			name: "networks",
 			component: NetworksView,
-		},
-		{
-			path: "/dashboard",
-			name: "dashboard",
-			component: DashboardView,
 		},
 		{
 			path: "/watchlist",
