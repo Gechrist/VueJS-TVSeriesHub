@@ -2,7 +2,7 @@ import { middleware } from "supertokens-node/framework/koa";
 import { SuperTokensConfig } from "./config.ts";
 import { verifySession } from "supertokens-node/recipe/session/framework/koa";
 import { SessionContext } from "supertokens-node/framework/koa";
-import { PrismaClient } from "./prisma/generated/prisma/client";
+import { PrismaClient } from "./prisma/generated/prisma/client.js";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PassThrough } from "stream";
 import cron from "node-cron";
