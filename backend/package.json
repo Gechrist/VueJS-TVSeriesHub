@@ -4,7 +4,7 @@
 		"dev": "npx vite-node --watch ./main.ts",
 		"lint": "eslint .",
 		"prisma:generate": "npx prisma generate",
-		"build": "npm run prisma:generate && xcopy prisma\\generated dist\\prisma\\generated /E /I /Y && tsc",
+		"build": "npm run prisma:generate && tsc",
 		"start": "npx prisma migrate deploy && node dist/main.js"
 	},
 	"dependencies": {
