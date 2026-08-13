@@ -1,5 +1,5 @@
 import { middleware } from "supertokens-node/framework/koa";
-import { SuperTokensConfig } from "./config";
+import { SuperTokensConfig } from "./config.ts";
 import { verifySession } from "supertokens-node/recipe/session/framework/koa";
 import { SessionContext } from "supertokens-node/framework/koa";
 import { PrismaClient } from "./prisma/generated/prisma/client";

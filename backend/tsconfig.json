@@ -13,6 +13,7 @@
 		"types": ["node"],
 		"noEmitOnError": true,
 		"ignoreDeprecations": "6.0",
+		"rewriteRelativeImportExtensions": true,
 
 		/* Source Map Options */
 		"sourceMap": true,
