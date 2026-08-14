@@ -6793,10 +6793,9 @@ router.post(
 
 app.use(router.routes());
 
-if (!module.parent)
-	server.listen(process.env.PORT, () =>
-		console.log("API Server listening on port " + process.env.PORT),
-	);
+server.listen(process.env.PORT, () =>
+	console.log("API Server listening on port " + process.env.PORT),
+);
 
 // Vite-Node’s HMR hooks - comment out in production
 //@ts-ignore
