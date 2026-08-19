@@ -5,7 +5,6 @@ import { SessionContext } from "supertokens-node/framework/koa";
 import { PrismaClient } from "./prisma/generated/prisma/client.js";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PassThrough } from "stream";
-import cron from "node-cron";
 import Koa from "koa";
 import http from "node:http";
 import cors from "@koa/cors";
@@ -394,23 +393,12 @@ router.get("/api/update-notifications", async (ctx) => {
 	ctx.body = "Notification cron job ran";
 });
 
-// dev cron job to update user notifications every 24 hours
-// cron.schedule("0 0 * * *", () => {
-// 	checkForShowsUpdate();
-// });
-
-// dev cron job to update show data once per week
+// cron job to update show data once per week
 router.get("/api/update-shows", async (ctx) => {
 	await deleteShowsData();
 	await populateShowsData();
 	ctx.body = "Shows data cron job ran";
 });
-
-// dev cron job to update show data once per week
-// cron.schedule("0 0 * * MON", async () => {
-// 	await deleteShowsData();
-// 	await populateShowsData();
-// });
 
 const networkLogos = {
 	"fuji tv": "/yS5UJjsSdZXML0YikWTYYHLPKhQ.png",
