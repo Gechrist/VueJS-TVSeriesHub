@@ -38,6 +38,11 @@ app.use(bodyParser());
 //setup SSE notification stream
 const userConnections = new Map();
 
+//ping server
+router.get("api/ping", async (ctx) => {
+	ctx.body = "Server ping";
+});
+
 // 📡 The SSE Stream Endpoint
 router.get("/api/events/stream", async (ctx) => {
 	const userId = ctx.query.userId;
@@ -51,6 +56,7 @@ router.get("/api/events/stream", async (ctx) => {
 	ctx.set({
 		"Content-Type": "text/event-stream",
 		"Cache-Control": "no-cache",
+		"X-Accel-Buffering": "no",
 		Connection: "keep-alive",
 	});
 
@@ -382,18 +388,29 @@ const checkForShowsUpdate = async () => {
 	}
 };
 
-// cron job to update user notifications every 24 hours
-cron.schedule("0 0 * * *", () => {
-	checkForShowsUpdate();
+//cron job to update user notifications every 24 hours
+router.get("/api/update-notifications", async (ctx) => {
+	await checkForShowsUpdate();
+	ctx.body = "Notification cron job ran";
 });
 
-// cron job to update show data once per week
-cron.schedule("0 0 * * MON", async () => {
+// dev cron job to update user notifications every 24 hours
+// cron.schedule("0 0 * * *", () => {
+// 	checkForShowsUpdate();
+// });
+
+// dev cron job to update show data once per week
+router.get("/api/update-shows", async (ctx) => {
 	await deleteShowsData();
 	await populateShowsData();
+	ctx.body = "Shows data cron job ran";
 });
 
-// let showsByNetwork: Array<any> = [];
+// dev cron job to update show data once per week
+// cron.schedule("0 0 * * MON", async () => {
+// 	await deleteShowsData();
+// 	await populateShowsData();
+// });
 
 const networkLogos = {
 	"fuji tv": "/yS5UJjsSdZXML0YikWTYYHLPKhQ.png",
@@ -5996,11 +6013,12 @@ const popularNetworksArray: Array<string> = [
 	"YouTube",
 ];
 
-router.get("/unify", async (ctx: SessionContext) => {
-	ctx.body = allNetworksArray.sort((a, b) =>
-		a.localeCompare(b, "en", { sensitivity: "base" }),
-	);
-});
+// helper function to get and sort all networks from the database
+// router.get("/unify", async (ctx: SessionContext) => {
+// 	ctx.body = allNetworksArray.sort((a, b) =>
+// 		a.localeCompare(b, "en", { sensitivity: "base" }),
+// 	);
+// });
 
 // format search/filter results
 const formatResults = (dataToFormat: any, sortOrder: string) => {
