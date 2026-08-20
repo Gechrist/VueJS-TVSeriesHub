@@ -395,6 +395,7 @@ router.get("/api/update-notifications", async (ctx) => {
 
 // cron job to update show data once per week
 router.get("/api/update-shows", async (ctx) => {
+	ctx.body = "Shows data cron job initiated";
 	await deleteShowsData();
 	await populateShowsData();
 	ctx.body = "Shows data cron job ran";
