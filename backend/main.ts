@@ -38,7 +38,7 @@ app.use(bodyParser());
 const userConnections = new Map();
 
 //ping server
-router.get("api/ping", async (ctx) => {
+router.get("/api/ping", async (ctx) => {
 	ctx.body = "Server ping";
 });
 
