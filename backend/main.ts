@@ -183,7 +183,7 @@ router.get("/getuserdata", verifySession(), async (ctx: SessionContext) => {
 	}
 });
 
-// router.get("/deleteshows", verifySession(), async (ctx: SessionContext) => {
+// router.get("/deleteshows", async (ctx: SessionContext) => {
 const deleteShowsData = async () => {
 	try {
 		const result = await prisma.series.deleteMany({});
@@ -6078,89 +6078,85 @@ const formatResults = (dataToFormat: any, sortOrder: string) => {
 };
 
 // initial show populate
-router.get(
-	"/getshowsbynetwork",
-	verifySession(),
-	async (ctx: SessionContext) => {
-		let networksToDisplay: Array<string> = [];
-		let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
-		let y: number = parseInt(ctx.query.limit as string) || 4;
-		let networklist: string = (ctx.query.networklist as string) || "";
-		let sortOrder: string = (ctx.query.sortorder as string) || "";
-		networksToDisplay =
-			networklist === "popular" ? popularNetworksArray : allNetworksArray;
-		if (sortOrder === "asc") {
-			networksToDisplay = networksToDisplay.reverse();
-		} else if (sortOrder === "desc") {
-			networksToDisplay = networksToDisplay.sort((a, b) =>
-				a.localeCompare(b, "en", { sensitivity: "base" }),
-			);
-		}
-		let showsByNetwork: Array<any> = [];
-		let networkLogo: string = "";
-		if (y > networksToDisplay.length) {
-			y = networksToDisplay.length;
-		}
+router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
+	let networksToDisplay: Array<string> = [];
+	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
+	let y: number = parseInt(ctx.query.limit as string) || 4;
+	let networklist: string = (ctx.query.networklist as string) || "";
+	let sortOrder: string = (ctx.query.sortorder as string) || "";
+	networksToDisplay =
+		networklist === "popular" ? popularNetworksArray : allNetworksArray;
+	if (sortOrder === "asc") {
+		networksToDisplay = networksToDisplay.reverse();
+	} else if (sortOrder === "desc") {
+		networksToDisplay = networksToDisplay.sort((a, b) =>
+			a.localeCompare(b, "en", { sensitivity: "base" }),
+		);
+	}
+	let showsByNetwork: Array<any> = [];
+	let networkLogo: string = "";
+	if (y > networksToDisplay.length) {
+		y = networksToDisplay.length;
+	}
 
-		try {
-			for (i; i < y; i++) {
-				let getShowsByNetwork: Array<any> = [];
-				if (webChannelArray.includes(networksToDisplay[i])) {
-					getShowsByNetwork = await prisma.series.findMany({
-						where: {
-							webChannel: { path: ["name"], equals: networksToDisplay[i] },
-						},
-						orderBy: { weight: "desc" },
-						select: {
-							name: true,
-							summary: true,
-							image: true,
-							genres: true,
-							runtime: true,
-							rating: true,
-							premiered: true,
-							tvMazeId: true,
-							status: true,
-							links: true,
-						},
-					});
-				} else {
-					getShowsByNetwork = await prisma.series.findMany({
-						where: {
-							network: { path: ["name"], equals: networksToDisplay[i] },
-						},
-						orderBy: { weight: "desc" },
-						select: {
-							name: true,
-							summary: true,
-							image: true,
-							runtime: true,
-							rating: true,
-							premiered: true,
-							tvMazeId: true,
-							status: true,
-							links: true,
-						},
-					});
-				}
-
-				networkLogo = `https://jaruba.github.io/channel-logos/export/transparent-white${networkLogos[networksToDisplay[i].toLowerCase()]}`;
-				showsByNetwork = [
-					...showsByNetwork,
-					{
-						network: { name: networksToDisplay[i], logo: networkLogo },
-						shows: [...getShowsByNetwork.flat()],
+	try {
+		for (i; i < y; i++) {
+			let getShowsByNetwork: Array<any> = [];
+			if (webChannelArray.includes(networksToDisplay[i])) {
+				getShowsByNetwork = await prisma.series.findMany({
+					where: {
+						webChannel: { path: ["name"], equals: networksToDisplay[i] },
 					},
-				];
-				ctx.body = showsByNetwork.flat();
+					orderBy: { weight: "desc" },
+					select: {
+						name: true,
+						summary: true,
+						image: true,
+						genres: true,
+						runtime: true,
+						rating: true,
+						premiered: true,
+						tvMazeId: true,
+						status: true,
+						links: true,
+					},
+				});
+			} else {
+				getShowsByNetwork = await prisma.series.findMany({
+					where: {
+						network: { path: ["name"], equals: networksToDisplay[i] },
+					},
+					orderBy: { weight: "desc" },
+					select: {
+						name: true,
+						summary: true,
+						image: true,
+						runtime: true,
+						rating: true,
+						premiered: true,
+						tvMazeId: true,
+						status: true,
+						links: true,
+					},
+				});
 			}
-			showsByNetwork = [];
-		} catch (e: any) {
-			console.log(e);
-			ctx.body = { warning: "Failed to fetch data. Please try again later." };
+
+			networkLogo = `https://jaruba.github.io/channel-logos/export/transparent-white${networkLogos[networksToDisplay[i].toLowerCase()]}`;
+			showsByNetwork = [
+				...showsByNetwork,
+				{
+					network: { name: networksToDisplay[i], logo: networkLogo },
+					shows: [...getShowsByNetwork.flat()],
+				},
+			];
+			ctx.body = showsByNetwork.flat();
 		}
-	},
-);
+		showsByNetwork = [];
+	} catch (e: any) {
+		console.log(e);
+		ctx.body = { warning: "Failed to fetch data. Please try again later." };
+	}
+});
 
 // get all networks for watchlist page
 
@@ -6202,7 +6198,7 @@ router.get("/getnetworks", verifySession(), async (ctx: SessionContext) => {
 });
 
 // get data for filtering
-router.get("/getfilterdata", verifySession(), async (ctx: SessionContext) => {
+router.get("/getfilterdata", async (ctx: SessionContext) => {
 	try {
 		const [networkArray, genresArray, languageArray, statusArray]: Array<any> =
 			await prisma.$transaction([
@@ -6282,7 +6278,7 @@ router.get("/getfilterdata", verifySession(), async (ctx: SessionContext) => {
 	}
 });
 // search by show name
-router.get("/searchshows", verifySession(), async (ctx: SessionContext) => {
+router.get("/searchshows", async (ctx: SessionContext) => {
 	let searchTerm: string = (ctx.query.searchterm as string) || "";
 	let sortOrder: string = (ctx.query.sortOrder as string) || "";
 	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
@@ -6338,192 +6334,188 @@ router.get("/searchshows", verifySession(), async (ctx: SessionContext) => {
 });
 
 //get results for filters
-router.get(
-	"/getshowsbyfilters",
-	verifySession(),
-	async (ctx: SessionContext) => {
-		let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
-		let y: number = parseInt(ctx.query.limit as string) || 4;
-		let sortOrder: string = (ctx.query.sortOrder as string) || "";
-		let networks: any =
-			(ctx.query.networks as string).length > 0
-				? (ctx.query.networks as string).split(",")
-				: [];
-		let genres: any =
-			(ctx.query.genres as string).length > 0
-				? (ctx.query.genres as string).split(",")
-				: [];
-		let languages: any =
-			(ctx.query.languages as string).length > 0
-				? (ctx.query.languages as string).split(",")
-				: [];
-		let status: any =
-			(ctx.query.status as string).length > 0
-				? (ctx.query.status as string).split(",")
-				: [];
-		let rating: any =
-			(ctx.query.rating as string).length > 0
-				? (ctx.query.rating as string).split(",")
-				: [];
-		let unratedShows: boolean =
-			ctx.query.unratedShows?.toString() === "true" ? true : false;
-		let runtime: any =
-			(ctx.query.runtime as string).length > 0
-				? (ctx.query.runtime as string).split(",")
-				: [];
-		let filterParams: {
-			networks: Array<string>;
-			genres: Array<string>;
-			languages: Array<string>;
-			status: Array<string>;
-			rating: Array<string>;
-			unratedShows: boolean;
-			runtime: Array<string>;
-		} = {
-			networks: [],
-			genres: [],
-			languages: [],
-			status: [],
-			rating: [],
-			unratedShows: false,
-			runtime: [],
-		};
-		filterParams.genres = genres;
-		filterParams.networks = networks;
-		filterParams.languages = languages;
-		filterParams.status = status;
-		filterParams.rating = rating;
-		filterParams.runtime = runtime;
-		filterParams.unratedShows = unratedShows;
-		console.log(filterParams);
+router.get("/getshowsbyfilters", async (ctx: SessionContext) => {
+	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
+	let y: number = parseInt(ctx.query.limit as string) || 4;
+	let sortOrder: string = (ctx.query.sortOrder as string) || "";
+	let networks: any =
+		(ctx.query.networks as string).length > 0
+			? (ctx.query.networks as string).split(",")
+			: [];
+	let genres: any =
+		(ctx.query.genres as string).length > 0
+			? (ctx.query.genres as string).split(",")
+			: [];
+	let languages: any =
+		(ctx.query.languages as string).length > 0
+			? (ctx.query.languages as string).split(",")
+			: [];
+	let status: any =
+		(ctx.query.status as string).length > 0
+			? (ctx.query.status as string).split(",")
+			: [];
+	let rating: any =
+		(ctx.query.rating as string).length > 0
+			? (ctx.query.rating as string).split(",")
+			: [];
+	let unratedShows: boolean =
+		ctx.query.unratedShows?.toString() === "true" ? true : false;
+	let runtime: any =
+		(ctx.query.runtime as string).length > 0
+			? (ctx.query.runtime as string).split(",")
+			: [];
+	let filterParams: {
+		networks: Array<string>;
+		genres: Array<string>;
+		languages: Array<string>;
+		status: Array<string>;
+		rating: Array<string>;
+		unratedShows: boolean;
+		runtime: Array<string>;
+	} = {
+		networks: [],
+		genres: [],
+		languages: [],
+		status: [],
+		rating: [],
+		unratedShows: false,
+		runtime: [],
+	};
+	filterParams.genres = genres;
+	filterParams.networks = networks;
+	filterParams.languages = languages;
+	filterParams.status = status;
+	filterParams.rating = rating;
+	filterParams.runtime = runtime;
+	filterParams.unratedShows = unratedShows;
+	console.log(filterParams);
 
-		const filterArgument: any = [];
-		const filterArgumentOR: any = [];
-		const filterArgumentAND: any = [];
-		filterParams.genres.length > 0
-			? filterArgument.push({ genres: { hasSome: filterParams.genres } })
-			: null;
-		filterParams.networks.length > 0
-			? filterParams.networks.map((network: string) => {
-					filterArgumentOR.push(
-						{ webChannel: { path: ["name"], equals: network } },
-						{ network: { path: ["name"], equals: network } },
-					);
-				})
-			: null;
-		filterParams.languages.length > 0
-			? filterArgumentOR.push({ language: { in: filterParams.languages } })
-			: null;
-		filterParams.status.length > 0
-			? filterArgument.push({ status: { in: filterParams.status } })
-			: null;
-		filterParams.runtime[0] === "0"
-			? null
-			: filterArgumentAND.push({
-					runtime: { gte: parseFloat(filterParams.runtime[0]) },
-				});
-		filterParams.runtime[1] === "120"
-			? null
-			: filterArgumentAND.push({
-					runtime: { lte: parseFloat(filterParams.runtime[0]) },
-				});
-		filterParams.unratedShows
-			? null
-			: filterArgumentAND.push({ rating: { path: ["average"], not: null } });
-		filterParams.rating[0] === "0"
-			? null
-			: filterArgumentAND.push({
-					rating: {
-						path: ["average"],
-						gte: parseFloat(filterParams.rating[0]),
-					},
-				});
-		filterParams.rating[1] === "10"
-			? null
-			: filterArgumentAND.push({
-					rating: {
-						path: ["average"],
-						lte: parseFloat(filterParams.rating[1]),
-					},
-				});
-
-		try {
-			const RawFilteredResults = await prisma.series.findMany({
-				where: {
-					...Object.assign({}, ...filterArgument, {
-						AND: [...filterArgumentAND, { OR: [...filterArgumentOR] }],
-					}),
-				},
-				select: {
-					name: true,
-					network: true,
-					webChannel: true,
-					summary: true,
-					image: true,
-					runtime: true,
-					rating: true,
-					premiered: true,
-					status: true,
-					tvMazeId: true,
-					genres: true,
-					language: true,
-					links: true,
-				},
-				orderBy: {
-					weight: "desc",
+	const filterArgument: any = [];
+	const filterArgumentOR: any = [];
+	const filterArgumentAND: any = [];
+	filterParams.genres.length > 0
+		? filterArgument.push({ genres: { hasSome: filterParams.genres } })
+		: null;
+	filterParams.networks.length > 0
+		? filterParams.networks.map((network: string) => {
+				filterArgumentOR.push(
+					{ webChannel: { path: ["name"], equals: network } },
+					{ network: { path: ["name"], equals: network } },
+				);
+			})
+		: null;
+	filterParams.languages.length > 0
+		? filterArgumentOR.push({ language: { in: filterParams.languages } })
+		: null;
+	filterParams.status.length > 0
+		? filterArgument.push({ status: { in: filterParams.status } })
+		: null;
+	filterParams.runtime[0] === "0"
+		? null
+		: filterArgumentAND.push({
+				runtime: { gte: parseFloat(filterParams.runtime[0]) },
+			});
+	filterParams.runtime[1] === "120"
+		? null
+		: filterArgumentAND.push({
+				runtime: { lte: parseFloat(filterParams.runtime[0]) },
+			});
+	filterParams.unratedShows
+		? null
+		: filterArgumentAND.push({ rating: { path: ["average"], not: null } });
+	filterParams.rating[0] === "0"
+		? null
+		: filterArgumentAND.push({
+				rating: {
+					path: ["average"],
+					gte: parseFloat(filterParams.rating[0]),
 				},
 			});
-			RawFilteredResults.map((show: any) => {
-				if (
-					networks &&
-					!networks.includes(show.network?.name) &&
-					!genres.some((genre: string) => genres.includes(genre)) &&
-					!languages.includes(show.language) &&
-					!status.includes(show.status)
-				) {
-					delete show.network?.name;
-				}
-				if (
-					networks &&
-					!networks.includes(show.webChannel?.name) &&
-					!genres.some((genre: string) => genres.includes(genre)) &&
-					!languages.includes(show.language) &&
-					!status.includes(show.status)
-				) {
-					delete show.webChannel?.name;
-				}
+	filterParams.rating[1] === "10"
+		? null
+		: filterArgumentAND.push({
+				rating: {
+					path: ["average"],
+					lte: parseFloat(filterParams.rating[1]),
+				},
 			});
-			const filteredResults = formatResults(RawFilteredResults, sortOrder);
-			const results: any[] = [];
-			if (y > filteredResults.length) {
-				y = filteredResults.length;
-			}
-			for (i; i < y; i++) {
-				results.push(filteredResults[i]);
-			}
 
-			ctx.body = results;
-		} catch (e: any) {
-			console.log(e);
-			const match = e.message.match(/\{.*\}/s);
-			if (match) {
-				const parsed = JSON.parse(match[0]);
-				const code = parsed?.body?.code;
-				if (code === "P6009") {
-					ctx.body = {
-						warning: "Too many results. Please refine your criteria.",
-					};
-				} else {
-					ctx.body = {
-						warning: "Failed to fetch data. Please try again later.",
-					};
-				}
+	try {
+		const RawFilteredResults = await prisma.series.findMany({
+			where: {
+				...Object.assign({}, ...filterArgument, {
+					AND: [...filterArgumentAND, { OR: [...filterArgumentOR] }],
+				}),
+			},
+			select: {
+				name: true,
+				network: true,
+				webChannel: true,
+				summary: true,
+				image: true,
+				runtime: true,
+				rating: true,
+				premiered: true,
+				status: true,
+				tvMazeId: true,
+				genres: true,
+				language: true,
+				links: true,
+			},
+			orderBy: {
+				weight: "desc",
+			},
+		});
+		RawFilteredResults.map((show: any) => {
+			if (
+				networks &&
+				!networks.includes(show.network?.name) &&
+				!genres.some((genre: string) => genres.includes(genre)) &&
+				!languages.includes(show.language) &&
+				!status.includes(show.status)
+			) {
+				delete show.network?.name;
 			}
-			//if no match
-			ctx.body = { warning: "Failed to fetch data. Please try again later." };
+			if (
+				networks &&
+				!networks.includes(show.webChannel?.name) &&
+				!genres.some((genre: string) => genres.includes(genre)) &&
+				!languages.includes(show.language) &&
+				!status.includes(show.status)
+			) {
+				delete show.webChannel?.name;
+			}
+		});
+		const filteredResults = formatResults(RawFilteredResults, sortOrder);
+		const results: any[] = [];
+		if (y > filteredResults.length) {
+			y = filteredResults.length;
 		}
-	},
-);
+		for (i; i < y; i++) {
+			results.push(filteredResults[i]);
+		}
+
+		ctx.body = results;
+	} catch (e: any) {
+		console.log(e);
+		const match = e.message.match(/\{.*\}/s);
+		if (match) {
+			const parsed = JSON.parse(match[0]);
+			const code = parsed?.body?.code;
+			if (code === "P6009") {
+				ctx.body = {
+					warning: "Too many results. Please refine your criteria.",
+				};
+			} else {
+				ctx.body = {
+					warning: "Failed to fetch data. Please try again later.",
+				};
+			}
+		}
+		//if no match
+		ctx.body = { warning: "Failed to fetch data. Please try again later." };
+	}
+});
 
 // get user watchlist shows
 router.get(
