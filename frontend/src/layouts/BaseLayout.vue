@@ -29,7 +29,7 @@
 	async function getJWT() {
 		if (await Session.doesSessionExist()) {
 			userId.value = (await Session.getUserId()) as string;
-			let jwt = await Session.getAccessToken();
+			// let jwt = await Session.getAccessToken();
 		}
 	}
 
@@ -105,7 +105,7 @@
 		const url = `${apiUrl}/api/events/stream?userId=${userInfo.value}`;
 		sseStream = new EventSource(url);
 
-		sseStream.onmessage = (event: any) => {
+		sseStream.onmessage = () => {
 			if (userInfo.value) {
 				getNotifications(userInfo.value);
 			}

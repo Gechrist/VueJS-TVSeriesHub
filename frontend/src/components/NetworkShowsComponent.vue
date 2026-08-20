@@ -32,7 +32,7 @@
 		itemsToShow: "auto",
 		wrapAround: false,
 		autoplay: 0,
-		dir: "ltr",
+		dir: "ltr" as const,
 		gap: 20,
 		breakpoints: {
 			1024: {
@@ -47,8 +47,8 @@
 		},
 		mouseDrag: true,
 		touchDrag: true,
-		slideEffect: "slide",
-		snapAlign: "center",
+		slideEffect: "slide" as const,
+		snapAlign: "center" as const,
 	};
 
 	const networkNameAsText = ref<boolean>(false);

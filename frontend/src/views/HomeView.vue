@@ -39,8 +39,8 @@
 		itemsToShow: 1,
 		wrapAround: true,
 		autoplay: 4000,
-		dir: "ttb",
-		slideEffect: "fade",
+		dir: "ttb" as const,
+		slideEffect: "fade" as const,
 	};
 
 	const getUserDataFunction = async (userInfo: string) => {

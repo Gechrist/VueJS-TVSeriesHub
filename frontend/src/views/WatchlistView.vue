@@ -11,7 +11,7 @@
 		itemsToShow: "auto",
 		wrapAround: false,
 		autoplay: 0,
-		dir: "ttb",
+		dir: "ttb" as const,
 		gap: 4,
 		breakpoints: {
 			1024: {
@@ -26,8 +26,8 @@
 		},
 		mouseDrag: true,
 		touchDrag: true,
-		slideEffect: "slide",
-		snapAlign: "start",
+		slideEffect: "slide" as const,
+		snapAlign: "start" as const,
 	};
 
 	const apiUrl = import.meta.env.VITE_APP_API_URL || "http://localhost:3001";
