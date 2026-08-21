@@ -1,7 +1,5 @@
 import EmailPassword from "supertokens-node/recipe/emailpassword";
 import Session from "supertokens-node/recipe/session";
-import Dashboard from "supertokens-node/recipe/dashboard";
-import UserRoles from "supertokens-node/recipe/userroles";
 import type { TypeInput } from "supertokens-node/types";
 
 export const SuperTokensConfig: TypeInput = {
@@ -11,16 +9,11 @@ export const SuperTokensConfig: TypeInput = {
 		apiKey: process.env.SUPERTOKENS_API_KEY as string,
 	},
 	appInfo: {
-		appName: "SuperTokens Demo App",
+		appName: "TV Series Hub",
 		apiDomain: process.env.VITE_APP_API_URL as string,
 		websiteDomain: process.env.VITE_APP_WEBSITE_URL,
 		apiBasePath: "/auth",
 		websiteBasePath: "/auth",
 	},
-	recipeList: [
-		EmailPassword.init(),
-		Dashboard.init(),
-		UserRoles.init(),
-		Session.init(),
-	],
+	recipeList: [EmailPassword.init(), Session.init()],
 };

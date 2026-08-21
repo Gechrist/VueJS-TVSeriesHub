@@ -15,7 +15,9 @@ import bodyParser from "koa-bodyparser";
 const prisma = new PrismaClient({
 	accelerateUrl: process.env.DATABASE_URL,
 }).$extends(withAccelerate());
+
 supertokens.init(SuperTokensConfig);
+
 const app = new Koa();
 const router = new KoaRouter();
 const server = http.createServer(app.callback());
