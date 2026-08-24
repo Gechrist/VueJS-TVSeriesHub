@@ -6,7 +6,7 @@ const isMultitenancy = false;
 export function initSuperTokensUI() {
 	(window as any).supertokensUIInit("supertokensui", {
 		appInfo: {
-			websiteDomain: import.meta.env.VITE_APP_WEBSITE_URL,
+			websiteDomain: window.location.origin,
 			apiDomain: import.meta.env.VITE_APP_API_URL,
 			appName: "TV Series Hub",
 			websiteBasePath: "/auth",

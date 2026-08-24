@@ -5,7 +5,7 @@ import type { TypeInput } from "supertokens-node/types";
 export const SuperTokensConfig: TypeInput = {
 	supertokens: {
 		connectionURI:
-			"https://st-dev-1668f300-7138-11f1-8627-7fce5a1f009c.aws.supertokens.io",
+			"https://st-dev-ec892070-9d45-11f1-a985-032acd70a4bc.aws.supertokens.io",
 		apiKey: process.env.SUPERTOKENS_API_KEY as string,
 	},
 	appInfo: {
