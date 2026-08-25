@@ -668,7 +668,7 @@
 					</div>
 					<div
 						v-if="data.length"
-						class="mt-32 px-2"
+						class="mt-22 lg:mt-32 px-2"
 						v-for="networkShows in data"
 					>
 						<NetworkShow

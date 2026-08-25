@@ -20,6 +20,7 @@ const app = new Koa();
 const router = new KoaRouter();
 const server = http.createServer(app.callback());
 
+//make Koa trust Render's reverse proxy and allow secure cookies
 app.proxy = true;
 
 //initialize supertokens

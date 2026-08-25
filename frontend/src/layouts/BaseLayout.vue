@@ -102,6 +102,22 @@
 			getNotifications(userInfo.value);
 		}
 		// set up SSE consume
+		if (userInfo.value) {
+			const url = `${apiUrl}/api/events/stream?userId=${userInfo.value}`;
+			sseStream = new EventSource(url);
+
+			sseStream.onmessage = () => {
+				if (userInfo.value) {
+					getNotifications(userInfo.value);
+				}
+			};
+
+			sseStream.onerror = () => {
+				console.log(
+					"Stream connection interrupted. Will retry using Last-Event-ID header...",
+				);
+			};
+		}
 		const url = `${apiUrl}/api/events/stream?userId=${userInfo.value}`;
 		sseStream = new EventSource(url);
 
