@@ -72,7 +72,7 @@ export function initSuperTokensWebJS() {
 		},
 		recipeList: [
 			//@ts-ignore
-			Session.init({ exposeAccessTokenToFrontendInCookieBasedAuth: true }),
+			Session.init(),
 		],
 	});
 
@@ -84,3 +84,4 @@ export function initSuperTokensWebJS() {
 export async function initTenantSelectorInterface() {
 	/* STUB, to prevent linters complaining */
 }
+//{ exposeAccessTokenToFrontendInCookieBasedAuth: true }
