@@ -37,7 +37,7 @@ app.use(middleware());
 app.use(bodyParser());
 
 //initialize supertokens
-supertokens.init({ framework: "koa", ...SuperTokensConfig });
+supertokens.init(SuperTokensConfig);
 
 //setup SSE notification stream
 const userConnections = new Map();
