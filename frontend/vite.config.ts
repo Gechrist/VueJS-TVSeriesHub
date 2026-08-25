@@ -6,14 +6,15 @@ import tailwindcss from "@tailwindcss/vite";
 
 // Vite resolve alias configuration
 export default defineConfig({
-    plugins: [vue(),tailwindcss()],
-    server: {
-        port: 3000,
-        host:true
-    },
-    resolve: {
-        alias: {
-            "@": fileURLToPath(new URL("./src", import.meta.url)),
-        },
-    },
+	base: "/",
+	plugins: [vue(), tailwindcss()],
+	server: {
+		port: 3000,
+		host: true,
+	},
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
+		},
+	},
 });

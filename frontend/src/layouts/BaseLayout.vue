@@ -147,10 +147,10 @@
 			:class="`${backgroundColor && 'bg-amber-600'} fixed font-krub text-sm lg:text-base 2xl:text-3x pt-4 h-22 w-screen text-white z-10 flex flex-col gap-4`"
 		>
 			<div
-				class="w-full flex flex-col gap-0 md:flex-row justify-around items-end md:items-start"
+				class="w-full flex flex-col gap-0 lg:flex-row justify-around items-end md:items-start"
 			>
 				<section
-					class="w-full md:w-1/2 text-4xl md:text-[40px] 2xl:text-[50px] font-semibold tracking-tight flex justify-center"
+					class="w-full lg:w-1/2 text-4xl md:text-[40px] 2xl:text-[50px] font-semibold tracking-tight flex justify-center"
 				>
 					<router-link to="/">TV Series Hub</router-link>
 				</section>
