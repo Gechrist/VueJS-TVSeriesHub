@@ -15,5 +15,8 @@ export const SuperTokensConfig: TypeInput = {
 		apiBasePath: "/auth",
 		websiteBasePath: "/auth",
 	},
-	recipeList: [EmailPassword.init(), Session.init()],
+	recipeList: [
+		EmailPassword.init(),
+		Session.init({ cookieSecure: true, cookieSameSite: "none" }),
+	],
 };

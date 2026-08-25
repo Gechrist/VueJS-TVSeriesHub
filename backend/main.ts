@@ -16,11 +16,11 @@ const prisma = new PrismaClient({
 	accelerateUrl: process.env.DATABASE_URL,
 }).$extends(withAccelerate());
 
-supertokens.init(SuperTokensConfig);
-
 const app = new Koa();
 const router = new KoaRouter();
 const server = http.createServer(app.callback());
+
+app.proxy = true;
 
 app.use(
 	cors({
@@ -35,6 +35,9 @@ app.use(middleware());
 
 // body parser for koa,
 app.use(bodyParser());
+
+//initialize supertokens
+supertokens.init({ framework: "koa", ...SuperTokensConfig });
 
 //setup SSE notification stream
 const userConnections = new Map();
