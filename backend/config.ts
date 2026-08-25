@@ -3,6 +3,7 @@ import Session from "supertokens-node/recipe/session";
 import type { TypeInput } from "supertokens-node/types";
 
 export const SuperTokensConfig: TypeInput = {
+	debug: true,
 	supertokens: {
 		connectionURI: process.env.SUPERTOKENS_CONNECTION_URI as string,
 		apiKey: process.env.SUPERTOKENS_API_KEY as string,

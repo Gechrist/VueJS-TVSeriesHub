@@ -5,6 +5,7 @@ const isMultitenancy = false;
 
 export function initSuperTokensUI() {
 	(window as any).supertokensUIInit("supertokensui", {
+		enableDebugLogs: true,
 		appInfo: {
 			websiteDomain: window.location.origin,
 			apiDomain: import.meta.env.VITE_APP_API_URL,
@@ -74,6 +75,7 @@ export function initSuperTokensWebJS() {
 			//@ts-ignore
 			Session.init(),
 		],
+		enableDebugLogs: true,
 	});
 
 	if (isMultitenancy) {
