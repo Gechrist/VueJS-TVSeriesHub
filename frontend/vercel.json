@@ -1,9 +1,3 @@
 {
-	"rewrites": [
-		{ "source": "/auth/(.*)", "destination": "/index.html" },
-		{
-			"source": "/((?!api|assets|static|.*\\..*)$)",
-			"destination": "/index.html"
-		}
-	]
+	"rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
