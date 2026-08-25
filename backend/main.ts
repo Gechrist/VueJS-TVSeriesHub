@@ -22,6 +22,9 @@ const server = http.createServer(app.callback());
 
 app.proxy = true;
 
+//initialize supertokens
+supertokens.init(SuperTokensConfig);
+
 app.use(
 	cors({
 		origin: process.env.VITE_APP_WEBSITE_URL,
@@ -35,9 +38,6 @@ app.use(middleware());
 
 // body parser for koa,
 app.use(bodyParser());
-
-//initialize supertokens
-supertokens.init(SuperTokensConfig);
 
 //setup SSE notification stream
 const userConnections = new Map();
