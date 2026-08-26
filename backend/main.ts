@@ -310,8 +310,6 @@ const checkForShowsUpdate = async () => {
 
 				for (const updatedShow of updatedShows) {
 					if (user.watchlist.includes(updatedShow)) {
-						console.log(`https://api.tvmaze.com/shows/${updatedShow}`);
-
 						const rawUpdatedShowData = await fetch(
 							`https://api.tvmaze.com/shows/${updatedShow}`,
 						);
@@ -676,7 +674,7 @@ const networkLogos = {
 	"cnbc world": "/hfmJTKDzTNlV9jYRROE3eaqF3VI.png",
 	svt1: "/zFb3TsNzVC8STlkSzbnF1FTHXTA.png",
 	cinemax: "/6mSHSquNpfLgDdv6VnOOvC5Uz2h.png",
-	"fox sports networkResults": "/cjf6hfzFj7SPhJZAvLHP4Th69OP.png",
+	"fox sports networks": "/cjf6hfzFj7SPhJZAvLHP4Th69OP.png",
 	"france 2": "/b1cFa5FcHHnpejKiPybXSPcqKjT.png",
 	"sky angel": "/eLhbh9N9xJpUkVi7qksiT1Rh3kG.png",
 	hot3: "/6GFmliU9Dv6pgSPfhMra6a89HA6.png",
@@ -2406,7 +2404,7 @@ const allNetworksArray: Array<string> = [
 	"AOL On",
 	"Apple Music",
 	"Apple News",
-	"Apple TV+",
+	"Apple TV",
 	"APTN",
 	"APTN Lumi",
 	"ARD Mediathek",
@@ -4178,7 +4176,7 @@ const webChannelArray: Array<string> = [
 	"Animate.tv",
 	"Apple Music",
 	"Apple News",
-	"Apple TV+",
+	"Apple TV",
 	"AsianCrush",
 	"Astro GO",
 	"Atom.com",
@@ -5992,7 +5990,7 @@ const webChannelArray: Array<string> = [
 
 const popularNetworksArray: Array<string> = [
 	"AMC",
-	"Apple TV+",
+	"Apple TV",
 	"BBC iPlayer",
 	"discovery+",
 	"Disney+",
@@ -6086,8 +6084,8 @@ const formatResults = (dataToFormat: any, sortOrder: string) => {
 // initial show populate
 router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 	let networksToDisplay: Array<string> = [];
-	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
-	let y: number = parseInt(ctx.query.limit as string) || 4;
+	let i: number = parseInt(ctx.query.limit as string) - 3 || 0;
+	let y: number = parseInt(ctx.query.limit as string) || 3;
 	let networklist: string = (ctx.query.networklist as string) || "";
 	let sortOrder: string = (ctx.query.sortorder as string) || "";
 	networksToDisplay =
@@ -6101,6 +6099,7 @@ router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 	}
 	let showsByNetwork: Array<any> = [];
 	let networkLogo: string = "";
+
 	if (y > networksToDisplay.length) {
 		y = networksToDisplay.length;
 	}
@@ -6287,8 +6286,8 @@ router.get("/getfilterdata", async (ctx: SessionContext) => {
 router.get("/searchshows", async (ctx: SessionContext) => {
 	let searchTerm: string = (ctx.query.searchterm as string) || "";
 	let sortOrder: string = (ctx.query.sortOrder as string) || "";
-	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
-	let y: number = parseInt(ctx.query.limit as string) || 4;
+	let i: number = parseInt(ctx.query.limit as string) - 3 || 0;
+	let y: number = parseInt(ctx.query.limit as string) || 3;
 	try {
 		const searchRawResults = await prisma.series.findMany({
 			where: {
@@ -6341,8 +6340,8 @@ router.get("/searchshows", async (ctx: SessionContext) => {
 
 //get results for filters
 router.get("/getshowsbyfilters", async (ctx: SessionContext) => {
-	let i: number = parseInt(ctx.query.limit as string) - 4 || 0;
-	let y: number = parseInt(ctx.query.limit as string) || 4;
+	let i: number = parseInt(ctx.query.limit as string) - 3 || 0;
+	let y: number = parseInt(ctx.query.limit as string) || 3;
 	let sortOrder: string = (ctx.query.sortOrder as string) || "";
 	let networks: any =
 		(ctx.query.networks as string).length > 0
@@ -6394,7 +6393,6 @@ router.get("/getshowsbyfilters", async (ctx: SessionContext) => {
 	filterParams.rating = rating;
 	filterParams.runtime = runtime;
 	filterParams.unratedShows = unratedShows;
-	console.log(filterParams);
 
 	const filterArgument: any = [];
 	const filterArgumentOR: any = [];
@@ -6717,14 +6715,6 @@ router.post(
 			readStatus: boolean;
 			userEmail: string;
 		};
-		console.log(
-			"index",
-			index,
-			"readStatus",
-			readStatus,
-			"userEmail",
-			userEmail,
-		);
 		try {
 			const getNotification = await prisma.user.findUnique({
 				where: { email: userEmail },

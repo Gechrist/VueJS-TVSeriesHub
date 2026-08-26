@@ -27,7 +27,7 @@
 	const enableButton = ref<boolean>(true);
 	const data: Array<any> | Ref<any> = ref([]);
 	const dataForFiltersArray: Ref<any> = ref({});
-	let limit: number = 4;
+	let limit: number = 3;
 	const list = ref(null);
 	const loadMoreStatus = ref("idle");
 	let networkList = "popular";
@@ -71,7 +71,7 @@
 		if (!data.value) {
 			return;
 		}
-		limit = 4;
+		limit = 3;
 		data.value = [];
 		loadMoreStatus.value = "loading";
 		sortOrder.value = sortOrder.value === "desc" ? "asc" : "desc";
@@ -119,7 +119,7 @@
 		// clear search results when deleting search term
 		if (resultsForSearchOnDisplay.value && !searchTextBox.value) {
 			resultsForSearchOnDisplay.value = false;
-			limit = 4;
+			limit = 3;
 			data.value = [];
 			loadMoreStatus.value = "loading";
 			loadData(networkList);
@@ -133,7 +133,7 @@
 		if (searchTextBox.value) {
 			displayTooShortSearchTerm.value = false;
 			loadMoreStatus.value = "loading";
-			limit = 4;
+			limit = 3;
 			data.value = [];
 			getSearchResultsFunction(searchTextBox.value);
 		} else {
@@ -169,8 +169,8 @@
 				return;
 			}
 			data.value.push(...searchData);
-			loadMoreStatus.value = searchData.length < 4 ? "no-more" : "idle";
-			limit = limit + 4;
+			loadMoreStatus.value = searchData.length < 3 ? "no-more" : "idle";
+			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
 					window.innerWidth - document.documentElement.clientWidth > 0;
@@ -197,7 +197,7 @@
 			!showShowsWithoutRating.value
 		) {
 			data.value = [];
-			limit = 4;
+			limit = 3;
 			loadMoreStatus.value = "loading";
 			warning.value = "";
 			getResultsForFiltersFunction(true);
@@ -234,8 +234,8 @@
 				return;
 			}
 			data.value.push(...filteredData);
-			loadMoreStatus.value = filteredData.length < 4 ? "no-more" : "idle";
-			limit = limit + 4;
+			loadMoreStatus.value = filteredData.length < 3 ? "no-more" : "idle";
+			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
 					window.innerWidth - document.documentElement.clientWidth > 0;
@@ -273,7 +273,7 @@
 	//clear search or filters results function
 	const clearSearchOrFiltersResultsFunction = () => {
 		data.value = [];
-		limit = 4;
+		limit = 3;
 		if (userDataAvailable.value) {
 			getResultsForFiltersFunction(false);
 		} else {
@@ -301,7 +301,7 @@
 	//show all networks function
 	const showAll = () => {
 		data.value = [];
-		limit = 4;
+		limit = 3;
 		userDataAvailable.value = false;
 		networkList = "all";
 		loadData(networkList);
@@ -324,8 +324,8 @@
 			);
 			const newData: Array<any> = await response.json();
 			data.value.push(...newData);
-			loadMoreStatus.value = newData.length < 4 ? "no-more" : "idle";
-			limit = limit + 4;
+			loadMoreStatus.value = newData.length < 3 ? "no-more" : "idle";
+			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
 					window.innerWidth - document.documentElement.clientWidth > 0;
@@ -668,7 +668,7 @@
 					</div>
 					<div
 						v-if="data.length"
-						class="mt-10 lg:mt-32 px-2"
+						class="mt-22 lg:mt-32 px-2 flex flex-col gap-0"
 						v-for="networkShows in data"
 					>
 						<NetworkShow
