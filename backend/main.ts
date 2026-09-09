@@ -6797,18 +6797,18 @@ server.listen(process.env.PORT, () =>
 
 // Vite-Node’s HMR hooks - comment out in production
 //@ts-ignore
-if (import.meta.hot) {
-	// Called before a “full reload” (entry file changed)
-	//@ts-ignore
-	import.meta.hot.on("vite:beforeFullReload", () => {
-		console.log("🔄 Closing server before full reload");
-		server.close();
-	});
+// if (import.meta.hot) {
+// 	// Called before a “full reload” (entry file changed)
+// 	//@ts-ignore
+// 	import.meta.hot.on("vite:beforeFullReload", () => {
+// 		console.log("🔄 Closing server before full reload");
+// 		server.close();
+// 	});
 
-	// Called on any HMR dispose to clear side-effects
-	//@ts-ignore
-	import.meta.hot.dispose(() => {
-		console.log("✅ Disposing server instance");
-		server.close();
-	});
-}
+// 	// Called on any HMR dispose to clear side-effects
+// 	//@ts-ignore
+// 	import.meta.hot.dispose(() => {
+// 		console.log("✅ Disposing server instance");
+// 		server.close();
+// 	});
+// }
