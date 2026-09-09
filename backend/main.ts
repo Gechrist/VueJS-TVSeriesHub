@@ -6100,8 +6100,9 @@ router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 	let showsByNetwork: Array<any> = [];
 	let networkLogo: string = "";
 
-	if (y > networksToDisplay.length) {
-		y = networksToDisplay.length;
+	if (y - networksToDisplay.length >= 3) {
+		ctx.body = [];
+		return;
 	}
 
 	try {
@@ -6312,8 +6313,9 @@ router.get("/searchshows", async (ctx: SessionContext) => {
 		const searchResults = formatResults(searchRawResults, sortOrder);
 
 		const results: any[] = [];
-		if (y > searchResults.length) {
-			y = searchResults.length;
+		if (y - searchResults.length >= 3) {
+			ctx.body = [];
+			return;
 		}
 		for (i; i < y; i++) {
 			results.push(searchResults[i]);
@@ -6492,8 +6494,9 @@ router.get("/getshowsbyfilters", async (ctx: SessionContext) => {
 		});
 		const filteredResults = formatResults(RawFilteredResults, sortOrder);
 		const results: any[] = [];
-		if (y > filteredResults.length) {
-			y = filteredResults.length;
+		if (y - filteredResults.length >= 3) {
+			ctx.body = [];
+			return;
 		}
 		for (i; i < y; i++) {
 			results.push(filteredResults[i]);
@@ -6794,18 +6797,18 @@ server.listen(process.env.PORT, () =>
 
 // Vite-Node’s HMR hooks - comment out in production
 //@ts-ignore
-// if (import.meta.hot) {
-// 	// Called before a “full reload” (entry file changed)
-// 	//@ts-ignore
-// 	import.meta.hot.on("vite:beforeFullReload", () => {
-// 		console.log("🔄 Closing server before full reload");
-// 		server.close();
-// 	});
+if (import.meta.hot) {
+	// Called before a “full reload” (entry file changed)
+	//@ts-ignore
+	import.meta.hot.on("vite:beforeFullReload", () => {
+		console.log("🔄 Closing server before full reload");
+		server.close();
+	});
 
-// 	// Called on any HMR dispose to clear side-effects
-// 	//@ts-ignore
-// 	import.meta.hot.dispose(() => {
-// 		console.log("✅ Disposing server instance");
-// 		server.close();
-// 	});
-// }
+	// Called on any HMR dispose to clear side-effects
+	//@ts-ignore
+	import.meta.hot.dispose(() => {
+		console.log("✅ Disposing server instance");
+		server.close();
+	});
+}

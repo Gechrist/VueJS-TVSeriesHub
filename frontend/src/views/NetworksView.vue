@@ -168,7 +168,9 @@
 				});
 				return;
 			}
-			data.value.push(...searchData);
+			if (searchData.length) {
+				data.value.push(...searchData);
+			}
 			loadMoreStatus.value = searchData.length < 3 ? "no-more" : "idle";
 			limit += 3;
 			nextTick(() => {
@@ -233,7 +235,9 @@
 				});
 				return;
 			}
-			data.value.push(...filteredData);
+			if (filteredData.length) {
+				data.value.push(...filteredData);
+			}
 			loadMoreStatus.value = filteredData.length < 3 ? "no-more" : "idle";
 			limit += 3;
 			nextTick(() => {
@@ -302,7 +306,6 @@
 	const showAll = () => {
 		data.value = [];
 		limit = 3;
-		userDataAvailable.value = false;
 		networkList = "all";
 		loadData(networkList);
 		loadMoreStatus.value = "loading";
@@ -322,8 +325,19 @@
 					},
 				},
 			);
-			const newData: Array<any> = await response.json();
-			data.value.push(...newData);
+			const newData = await response.json();
+			if (newData.error) {
+				warning.value = newData.error;
+				loadMoreStatus.value = "no-more";
+				nextTick(() => {
+					vertScrollbarTrue.value =
+						window.innerWidth - document.documentElement.clientWidth > 0;
+				});
+				return;
+			}
+			if (newData) {
+				data.value.push(...newData);
+			}
 			loadMoreStatus.value = newData.length < 3 ? "no-more" : "idle";
 			limit += 3;
 			nextTick(() => {
@@ -711,7 +725,7 @@
 							v-if="
 								!resultsForSearchOnDisplay &&
 								!resultsForFiltersOnDisplay &&
-								userDataAvailable
+								networkList !== 'all'
 							"
 							class="cursor-pointer"
 							@click="showAll"
