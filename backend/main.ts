@@ -6109,7 +6109,10 @@ router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 	try {
 		for (i; i < y; i++) {
 			let getShowsByNetwork: Array<any> = [];
-			if (webChannelArray.includes(networksToDisplay[i])) {
+			if (
+				networksToDisplay[i] &&
+				webChannelArray.includes(networksToDisplay[i])
+			) {
 				getShowsByNetwork = await prisma.series.findMany({
 					where: {
 						webChannel: { path: ["name"], equals: networksToDisplay[i] },
@@ -6128,7 +6131,7 @@ router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 						links: true,
 					},
 				});
-			} else {
+			} else if (networksToDisplay[i]) {
 				getShowsByNetwork = await prisma.series.findMany({
 					where: {
 						network: { path: ["name"], equals: networksToDisplay[i] },
