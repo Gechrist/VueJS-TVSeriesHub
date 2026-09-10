@@ -6100,6 +6100,7 @@ router.get("/getshowsbynetwork", async (ctx: SessionContext) => {
 	let showsByNetwork: Array<any> = [];
 	let networkLogo: string = "";
 
+	// if the limit is greater than the number of networks, return an empty array
 	if (y - networksToDisplay.length >= 3) {
 		ctx.body = [];
 		return;
@@ -6318,7 +6319,9 @@ router.get("/searchshows", async (ctx: SessionContext) => {
 			return;
 		}
 		for (i; i < y; i++) {
-			results.push(searchResults[i]);
+			if (searchResults[i]) {
+				results.push(searchResults[i]);
+			}
 		}
 		ctx.body = results;
 	} catch (e: any) {
@@ -6499,7 +6502,9 @@ router.get("/getshowsbyfilters", async (ctx: SessionContext) => {
 			return;
 		}
 		for (i; i < y; i++) {
-			results.push(filteredResults[i]);
+			if (filteredResults[i]) {
+				results.push(filteredResults[i]);
+			}
 		}
 
 		ctx.body = results;

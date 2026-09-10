@@ -125,7 +125,7 @@
 			loadData(networkList);
 			nextTick(() => {
 				vertScrollbarTrue.value =
-					window.innerWidth - document.documentElement.clientWidth > 0;
+					document.documentElement.scrollHeight > window.innerHeight;
 			});
 		}
 		warning.value = "";
@@ -164,7 +164,7 @@
 				loadMoreStatus.value = "no-more";
 				nextTick(() => {
 					vertScrollbarTrue.value =
-						window.innerWidth - document.documentElement.clientWidth > 0;
+						document.documentElement.scrollHeight > window.innerHeight;
 				});
 				return;
 			}
@@ -175,7 +175,7 @@
 			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
-					window.innerWidth - document.documentElement.clientWidth > 0;
+					document.documentElement.scrollHeight > window.innerHeight;
 			});
 		} catch (e: any) {
 			warning.value = "Failed to fetch search results. Please try again later";
@@ -231,7 +231,7 @@
 				``;
 				nextTick(() => {
 					vertScrollbarTrue.value =
-						window.innerWidth - document.documentElement.clientWidth > 0;
+						document.documentElement.scrollHeight > window.innerHeight;
 				});
 				return;
 			}
@@ -242,7 +242,7 @@
 			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
-					window.innerWidth - document.documentElement.clientWidth > 0;
+					document.documentElement.scrollHeight > window.innerHeight;
 			});
 		} catch (e) {
 			warning.value =
@@ -331,7 +331,7 @@
 				loadMoreStatus.value = "no-more";
 				nextTick(() => {
 					vertScrollbarTrue.value =
-						window.innerWidth - document.documentElement.clientWidth > 0;
+						document.documentElement.scrollHeight > window.innerHeight;
 				});
 				return;
 			}
@@ -342,7 +342,7 @@
 			limit += 3;
 			nextTick(() => {
 				vertScrollbarTrue.value =
-					window.innerWidth - document.documentElement.clientWidth > 0;
+					document.documentElement.scrollHeight > window.innerHeight;
 			});
 		} catch (error) {
 			warning.value = "Failed to fetch data. Please try again later.";
@@ -513,7 +513,7 @@
 	onUpdated(() => {
 		nextTick(() => {
 			vertScrollbarTrue.value =
-				window.innerWidth - document.documentElement.clientWidth > 0;
+				document.documentElement.scrollHeight > window.innerHeight;
 		});
 	});
 </script>
