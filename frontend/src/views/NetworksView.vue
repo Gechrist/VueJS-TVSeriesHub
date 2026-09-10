@@ -521,6 +521,9 @@
 <template>
 	<BaseLayout>
 		<template #default="{ toggleBg }">
+			<teleport to="head">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			</teleport>
 			<section class="w-full">
 				<div class="flex flex-col text-white" ref="list">
 					<div
