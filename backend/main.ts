@@ -316,7 +316,7 @@ const checkForShowsUpdate = async () => {
 						// Local variable so it never leaks across loops
 						const updatedShowData = await rawUpdatedShowData.json();
 
-						// Find existing notifications in our locally updating list
+						// Find first existing notifications in our locally updating list
 						const existingNotification = currentNotifications.find(
 							(n: any) => n.showId === updatedShow,
 						);

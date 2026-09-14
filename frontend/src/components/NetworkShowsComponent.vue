@@ -51,6 +51,7 @@
 		snapAlign: "center" as const,
 	};
 
+	const carouselSlidingToIndex = ref<number>(0);
 	const networkNameAsText = ref<boolean>(false);
 	const displayDetails = ref<boolean>(false);
 	const showName = ref<string>("");
@@ -63,6 +64,11 @@
 	const showRuntime = ref<string | null>(null);
 	const showStatus = ref<string | null>(null);
 	const showPremiered = ref<string | null>(null);
+
+	const handleCarouselSlideChange = (data: any) => {
+		// Handle the slide change event here
+		carouselSlidingToIndex.value = data.slidingToIndex;
+	};
 
 	const displayDetailsFunction = (show: any) => {
 		showGenres.value = show.genres ? show.genres : [];
@@ -135,15 +141,19 @@
 				</div>
 			</div>
 			<div class="flex flex-col gap-0 justify-center">
-				<Carousel v-bind="carouselConfig">
+				<Carousel
+					v-bind="carouselConfig"
+					@slide-start="handleCarouselSlideChange"
+				>
 					<Slide
 						@click="displayDetailsFunction(show)"
 						@mouseenter="displayDetailsFunction(show)"
-						v-for="show in shows"
+						v-for="(show, index) in shows"
 						:key="show.name"
 						:class="`p-1 2xl:p-1.5 min-h-full rounded-md ${displayDetails && showName == show.name ? 'bg-blue-800' : ''}`"
 					>
 						<div
+							v-if="Math.abs(index - carouselSlidingToIndex) < 20"
 							class="flex flex-row gap-0 items-start absolute top-2 -left-3 z-50"
 						>
 							<img
@@ -260,6 +270,7 @@
 							>
 						</div>
 						<div
+							v-if="Math.abs(index - carouselSlidingToIndex) < 20"
 							:class="`w-[75px] md:w-[100px] flex flex-col h-auto gap-1 md:gap-1.5 2xl:gap-3.5`"
 						>
 							<img

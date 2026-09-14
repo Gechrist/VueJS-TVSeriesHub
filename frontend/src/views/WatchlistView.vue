@@ -345,7 +345,7 @@
 					:key="data.index"
 					class="flex flex-col w-full"
 				>
-					<h2 class="mt-4 text-2xl">{{ data.network.name }}</h2>
+					<h2 class="mt-4 text-2xl font-extrabold">{{ data.network.name }}</h2>
 					<Carousel v-bind="carouselConfig">
 						<Slide
 							v-for="show in data.shows"
