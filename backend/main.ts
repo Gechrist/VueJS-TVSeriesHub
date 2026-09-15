@@ -341,7 +341,7 @@ const checkForShowsUpdate = async () => {
 							updatedShowData?._links?.previousepisode?.name
 						) {
 							newNotification = {
-								message: `<b><i>${updatedShowData.name}</i></b> has a new episode`,
+								message: `<b><i>${updatedShowData.name}</i></b> has new episode(s)`,
 								previousEpisode:
 									updatedShowData?._links?.previousepisode?.name || "N/A",
 								status: updatedShowData.status,
