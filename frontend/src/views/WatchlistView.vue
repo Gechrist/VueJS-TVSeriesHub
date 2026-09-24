@@ -234,7 +234,7 @@
 				class="mt-20 2xl:mt-38 font-bold text-xl md:text-2xl flex flex-row w-full pl-2"
 			>
 				<div
-					class="w-1/2 flex flex-col gap-0.5 text-white font-normal text-xs lg:text-base 2xl:text-xl items-end mr-1 2xl:mr-5"
+					class="w-full flex flex-col gap-0.5 text-white font-normal text-xs lg:text-base 2xl:text-xl items-end mr-1 2xl:mr-5"
 				>
 					<aside
 						@click="showNetworks = true"
