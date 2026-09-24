@@ -233,10 +233,6 @@
 			<div
 				class="mt-20 2xl:mt-38 font-bold text-xl md:text-2xl flex flex-row w-full pl-2"
 			>
-				<h2 v-if="showNetworks" class="w-1/2 flex flex-row justify-start">
-					Featured Networks
-				</h2>
-				<h2 v-else class="w-1/2 flex flex-row justify-start">Watchlist</h2>
 				<div
 					class="w-1/2 flex flex-col gap-0.5 text-white font-normal text-xs lg:text-base 2xl:text-xl items-end mr-1 2xl:mr-5"
 				>
